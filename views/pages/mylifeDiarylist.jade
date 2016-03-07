@@ -1,0 +1,32 @@
+extends ../layout
+block content
+    div.container.w100.h100
+        div.row.note_row
+           div.clear
+             each item in diaries
+               div.note_item.col-lg-10.col-lg-offset-1.clear
+                a.title(href="/mylife/diary/#{item._id}") #{item.title}
+                div.date #{moment(item.meta.createAt).format('YYYY-MM-DD')}
+                div.content
+                input.contentn(type="hidden",value="#{item.content}")
+                div.more 
+                  a(href="/mylife/diary/#{item._id}") 更多
+
+           div.note_fenye
+            ul.pagination
+                - if(totalp>1){
+                    - for (var i = 0; i < totalp; i++) {
+                        - if (currentPage == (i + 1)) {
+                            li.active
+                                span #{currentPage}
+                        - }
+                        - else {
+                            li
+                                a(href='/mylife/diarylist?p=#{i+1}') #{i + 1}
+                        - }
+                    - }
+               - }
+    script(type='text/javascript').
+      $(".content").each(function(){
+        $(this).html($(this).next().val().slice(0,100)+"...");
+      })

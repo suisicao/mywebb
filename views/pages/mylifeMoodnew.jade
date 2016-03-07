@@ -1,0 +1,7 @@
+extends ../layout
+block content
+    div.container.w100.h100
+        div.row.note_row
+           form(method="post",action="/mylife/mood/save")
+                textarea(name="mood[content]")
+                button.btn.btn-danger(type="submit") 提交

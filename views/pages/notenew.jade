@@ -1,0 +1,9 @@
+extends ../layout
+block content
+    div.container.w100.h100
+        div.row.note_row
+           form(method="post",action="/note/save")
+                input(name="note[categoryName]")
+                input(name="note[title]")
+                textarea(name="note[content]")
+                button.btn.btn-danger(type="submit") 提交

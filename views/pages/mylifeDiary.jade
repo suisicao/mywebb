@@ -1,0 +1,25 @@
+extends ../layout
+block content
+    div.container.w100.h100
+        div.row.note_row
+           div.col-lg-10.col-lg-offset-1.ndetail_container
+            div
+              div.clear
+                div.title #{diary.title}
+                div.date #{moment(diary.meta.createAt).format('YYYY-MM-DD')}
+                div.content 
+                input(type="hidden",value="#{diary.content}")#content
+            div.mdiary_line 评论列表
+            each reply in diary.reply
+                div.mdiary_cline
+                        div.clear
+                            div.mdiary_name #{reply.nick}
+                            div.mdiary_time #{moment(reply.createAt).format('YYYY-MM-DD')}
+                        div.mdiary_content #{reply.comment}
+           
+            form(method="post",action="/mylife/diary/save?id=#{diary._id}")
+                input.mdiary_nicheng(placeholder="请输入您的昵称",name="diary[nick]")
+                textarea.mdiary_pinglun(placeholder="请输入评论内容",name="diary[comment]")
+                input.mdiary_submit(type="submit" value="提 交")
+    script(type='text/javascript').
+        $(".content").html($("#content").val())

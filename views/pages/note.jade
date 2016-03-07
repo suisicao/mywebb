@@ -1,0 +1,46 @@
+extends ../layout
+block content
+    div.container.w100.h100
+        div.row.note_row
+           div.note_float 分类
+           div.note_fenlei.col-lg-2.col-md-4.col-sm-4.col-xs-12.none
+            div.clear
+             div.close ×
+            each item in categories
+              p #{item.name}
+                  - var len=item.notes.length
+                  a(href="/note/?category="+item._id) &nbsp(#{len})
+           div.clear
+            each item in notes
+               div.note_item.col-lg-10.col-lg-offset-1.clear
+                a.title(href="/note/detail/#{item._id}") [#{item.categoryName}] #{item.title}
+                div.date #{moment(item.meta.createAt).format('YYYY-MM-DD')}
+                div.content
+                input.contentn(type="hidden",value="#{item.content}")
+                div.more 
+                  a(href="/note/detail/#{item._id}") 更多
+              
+           div.note_fenye
+            ul.pagination
+                - if(totalp>1){
+                    - for (var i = 0; i < totalp; i++) {
+                        - if (currentPage == (i + 1)) {
+                            li.active
+                                span #{currentPage}
+                        - }
+                        - else {
+                          - if(fenlei){
+                            li
+                                a(href='/note?category=#{fenlei}&p=#{i+1}') #{i + 1}
+                          - }
+                          - else{
+                            li
+                                a(href='/note?p=#{i+1}') #{i + 1}
+                          - }
+                        - }
+                    - }
+               - }
+    script(type='text/javascript').
+      $(".content").each(function(){
+        $(this).html($(this).next().val().slice(0,100)+"...");
+      })

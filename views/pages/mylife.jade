@@ -1,0 +1,52 @@
+extends ../layout
+block content
+    div.container.w100.h100
+        div.row
+            div.mylife_bg
+                img(src="/images/mylife_bg.jpg")
+                div.mylife_headtext.col-lg-4.col-lg-4.col-md-4.col-sm-6.col-xs-8
+                    h2 欢迎参观我的相册
+                    h2 了解更多,从这里开始
+                    a.mylife_headmore(href="/mylife/pic") 更多>>
+                div#myCarousel.carousel.slide.mylife_slide(data-ride="carousel",data-interval="5000")
+                    ol.carousel-indicators
+                        li.active(data-target="#myCarousel",data-slide-to="0")
+                        li(data-target="#myCarousel",data-slide-to="1")
+                        li(data-target="#myCarousel",data-slide-to="2")
+                    div.carousel-inner
+                        div.item.active
+                            img(src="/images/mylife_p3.jpg",alt="First slide")
+                        div.item
+                            img(src="/images/mylife_p2.jpg",alt="First slide")
+                        div.item
+                            img(src="/images/mylife_p1.jpg",alt="First slide")
+            div.mylife_mood
+                each item in moods
+                    div.mood.col-md-3.col-sm-6
+                        - if(item.content.length>40){
+                            - var newc=item.content.slice(0,40)+"..."
+                            p.content #{newc}
+                        - }
+                        - else{
+                            p.content #{item.content}
+                        - }
+                
+                        p.date #{moment(item.meta.createAt).format('YYYY-MM-DD')}
+              
+                a.more(href="/mylife/mood") 更多>>
+            div.mylife_rizhi
+                 each item in diaries
+                     div.rizhi.col-md-6.col-sm-6
+                        div.clear
+                            a.title(href="/mylife/diary/#{item._id}") #{item.title}
+                            p.date  #{moment(item.meta.createAt).format('YYYY-MM-DD')}
+                        - if(item.content.length>40){
+                            - var newc=item.content.slice(0,50)+"..."
+                            p.content #{newc}
+                        - }
+                        - else{
+                            p.content #{item.content}
+                        - }
+                
+                 a.more(href="/mylife/diarylist") 更多>>
+

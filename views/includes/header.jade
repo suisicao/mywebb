@@ -1,0 +1,71 @@
+div.navbar.navbar-default.mb0.navbar-fixed-top
+    if user
+        div.nav_checkin 欢迎你,#{user.name}
+    else
+        a.nav_checkin(href="#", data-toggle="modal", data-target="#signinModal") 登录
+    div.navbar-header
+        button.navbar-toggle(type="button",data-toggle="collapse",data-target="#bs-example-navbar-collapse-1")
+            span.sr-onlyToggle
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        a.navbar-brand(href="#")
+
+    div.collapse.navbar-collapse#bs-example-navbar-collapse-1
+        ul.nav.navbar-nav
+            if title=="首页"
+                li.active
+                    a(href="/") 首页
+            else
+                li
+                    a(href="/") 首页
+            if title=="我的"
+                li.active
+                    a(href="/mylife") 我的
+            else
+                li
+                    a(href="/mylife") 我的
+            if title=="前端笔记"
+                li.active
+                    a(href="/note") 前端笔记
+            else
+                li
+                    a(href="/note") 前端笔记
+            if title=="上线作品"
+                li.active
+                    a(href="/mylife") 上线作品
+            else
+                li
+                    a(href="/work") 上线作品
+#signinModal.modal.fade
+  .modal-dialog
+    .modal-content
+      form#signi(method="POST", action="/user/signin")
+        .modal-header 登录
+            span &nbsp( 只有该网站的主人才能登录哦 )
+        .modal-body
+          .form-group
+            label(for="signinName") 用户名
+            input#signinName.form-control(name="user[name]", type="text")
+          .form-group
+            label(for="signinPassword") 密码
+            input#signinPassword.form-control(name="user[password]", type="password")
+            div.signin_rem
+                input(type="checkbox")
+                &nbsp&nbsp记住登录名和密码
+        .modal-footer
+          button#modalclose.btn.btn-default(type="button", data-dismiss="modal") 关闭
+          button#signinsub.btn.btn-danger(type="button") 提交
+script(type='text/javascript').
+
+    var name=localStorage.getItem("name");
+    var password=localStorage.getItem("password");
+    if(name!=""&&name!="null"){
+            $("#signinName").val(name);
+    }
+    if(password!=""){
+            $("#signinPassword").val(password);
+    }
+
+
+                

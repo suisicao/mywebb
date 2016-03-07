@@ -1,0 +1,28 @@
+extends ../layout
+block content
+    div.container.w100.h100
+        div.row.note_row
+           div.col-lg-10.col-lg-offset-1
+            each item in moods
+                div.mmood_line.clear
+                    div.time #{moment(item.meta.createAt).format('YYYY-MM-DD')}
+                    div.bg
+                    div.content 
+                        div.picc
+                        div.text #{item.content}
+
+        
+            div.note_fenye
+                ul.pagination
+                    - if(totalp>1){
+                        - for (var i = 0; i < totalp; i++) {
+                            - if (currentPage == (i + 1)) {
+                                li.active
+                                    span #{currentPage}
+                            - }
+                            - else {
+                                li
+                                    a(href='/mylife/mood?p=#{i+1}') #{i + 1}
+                            - }
+                        - }
+                   - }

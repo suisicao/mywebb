@@ -1,0 +1,26 @@
+extends ../layout
+block content
+    div.container.w100.h100
+        div.row.note_row
+           div.col-lg-10.col-lg-offset-1.ndetail_container
+            div
+              div.clear
+                div.title #{note.title}
+                div.date #{moment(note.meta.createAt).format('YYYY-MM-DD')}
+                div.fenlei 分类：#{note.categoryName}
+                div.content 
+                input(type="hidden",value="#{note.content}")#content
+            div.mdiary_line 评论列表
+            each reply in note.reply
+                div.mdiary_cline
+                        div.clear
+                            div.mdiary_name #{reply.nick}
+                            div.mdiary_time #{moment(reply.createAt).format('YYYY-MM-DD')}
+                        div.mdiary_content #{reply.comment}
+           
+            form(method="post",action="/note/save?id=#{note._id}")
+                input.mdiary_nicheng(placeholder="请输入您的昵称",name="note[nick]")
+                textarea.mdiary_pinglun(placeholder="请输入评论内容",name="note[comment]")
+                input.mdiary_submit(type="submit" value="提 交")
+    script(type='text/javascript').
+        $(".content").html($("#content").val())
